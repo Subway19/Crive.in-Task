@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+	<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	<title></title>
+
+	<script>
+		$(document).ready(function(){
+			$("#Get").click(function(){
+				var consumer_key = 'REXioJRjptFYmYXb6vARjNiltlHks0Rbw2ZlwfXV';
+				var html = '';
+
+				/*var url2 = 'https://api.500px.com/v1/users/'+ <%= user.id %> + 
+				'galleries?consumer_key=' + consumer_key; */
+
+
+
+			$.ajax({
+					url : 'https://api.500px.com/v1/users/1/galleries?consumer_key=REXioJRjptFYmYXb6vARjNiltlHks0Rbw2ZlwfXV',
+					method:'get',
+					data: {},
+					dataType : 'json',
+					success : function(data){
+
+						if(data.message != null)
+						{
+							alert(data.message);
+						}
+
+						$.each(data,function(i,item){
+
+							html +=	'<h1>Title</h1>';
+							
+			
+							$('#resultDiv').html(html);
+							
+
+						});
+						
+					
+						}
+
+				});
+
+
+			});
+
+		});
+
+
+	</script>
+
+
+</head>
+<body>
+	<a href="/logout"><button type="button" class="btn btn-danger"><h2>Log Out</h2></button></a>
+
+	<h3><p><b>ID</b>: <%= user.id %></p></h3>
+
+	<h2>Hello <%= user.displayName %> </h2>
+	 Your photos are as follows:
+
+	 <button id="#Get">Get Photos</button>
+
+	 <div id="resultDiv"> </div>
+
+
+
+
+</body>
+</html>
+
