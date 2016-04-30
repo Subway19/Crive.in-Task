@@ -1,82 +1,92 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-	<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-
-
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-	<title></title>
-
+	<title>Photos</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 	<script>
+
 		$(document).ready(function(){
-			$("#Get").click(function(){
-				var consumer_key = 'REXioJRjptFYmYXb6vARjNiltlHks0Rbw2ZlwfXV';
-				var html = '';
+				$("#GetPhotos").click(function(){ 
 
-				/*var url2 = 'https://api.500px.com/v1/users/'+ <%= user.id %> + 
-				'galleries?consumer_key=' + consumer_key; */
+					var html2 = '';
+					var username = $('#username').val();
+
+					var url2 = 'https://api.500px.com/v1/photos?feature=user&&username='+ username +
+					  '&&image_size=3&&consumer_key=REXioJRjptFYmYXb6vARjNiltlHks0Rbw2ZlwfXV';
 
 
-
-			$.ajax({
-					url : 'https://api.500px.com/v1/users/1/galleries?consumer_key=REXioJRjptFYmYXb6vARjNiltlHks0Rbw2ZlwfXV',
+					$.ajax({
+					url : url2,
 					method:'get',
 					data: {},
 					dataType : 'json',
 					success : function(data){
 
-						if(data.message != null)
-						{
-							alert(data.message);
-						}
 
-						$.each(data,function(i,item){
-
-							html +=	'<h1>Title</h1>';
-							
-			
-							$('#resultDiv').html(html);
-							
-
-						});
-						
+						var photoslist = data.photos[0];
+						//console.log(photoslist);
 					
+
+						$.each(data.photos,function(i,item){
+							//console.log(item.thumbnail_photos[0].image_url);
+
+
+							html2 += 
+							'<div class="jumbotron top-space">'+
+							'<div class="row">'+
+							'<div class="col-sm-4">' +
+
+								'<h3>Photo id:'+ item.id + '</h3>' + '<br>'+
+								'<img src ='+ item.image_url +'>'+ '<hr>' + 
+									
+							'</div>';
+							
+
+								
+
+
+							$('#resultDiv').html(html2);
+
+								
+						}); 
+						
+
 						}
 
 				});
 
-
-			});
-
-		});
-
-
+}); 
+   
+});
+	
 	</script>
-
-
 </head>
-<body>
-	<a href="/logout"><button type="button" class="btn btn-danger"><h2>Log Out</h2></button></a>
 
-	<h3><p><b>ID</b>: <%= user.id %></p></h3>
+<body>
+
+<a href="/logout"><button><h2>Log Out</h2></button></a>
+
+	<!--<h3><p><b>ID</b>: <%= user.id %></p></h3> -->
+
 
 	<h2>Hello <%= user.displayName %> </h2>
-	 Your photos are as follows:
 
-	 <button id="#Get">Get Photos</button>
+ <input id="username" type="text" placeholder="Enter your user name"><br>
+	<button type="button" id="GetPhotos">Click Here!</button>
+	<br>
+	<br>
 
-	 <div id="resultDiv"> </div>
+	 <h2>Your photos are as follows:</h2>
 
 
 
+<div id="resultDiv"></div>
 
 </body>
 </html>
+
+
+
+
+				
 
